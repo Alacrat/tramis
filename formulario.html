@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Actitud BJJ - Brazilian Jiu Jitsu</title>
+    <style>
+        :root {
+            --primary-color: #1a2a3a;
+            --secondary-color: #8b0000;
+            --accent-color: #d4af37;
+            --light-color: #f0f0f0;
+        }
+        
+        body {
+            font-family: 'Oswald', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0;
+            background-color: #f5f5f5;
+            background-image: url('jutsu.webp');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: var(--light-color);
+        }
+        
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 3px solid var(--accent-color);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: var(--accent-color);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        h2 {
+            color: var(--accent-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            color: var(--light-color);
+            margin-top: 5px;
+        }
+        
+        .question {
+            background-color: rgba(26, 42, 58, 0.8);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border-left: 5px solid var(--secondary-color);
+            transition: transform 0.3s;
+        }
+        
+        .question:hover {
+            transform: translateX(5px);
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        .options {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 5px;
+            flex: 1;
+            min-width: 80px;
+        }
+        
+        .option input[type="radio"] {
+            display: none;
+        }
+        
+        .option label {
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option label:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .option input[type="radio"]:checked + label {
+            background-color: var(--secondary-color);
+            font-weight: bold;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+        
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin: 20px auto;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 2px solid var(--accent-color);
+        }
+        
+        button:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        #result {
+            display: none;
+            background-color: rgba(26, 42, 58, 0.9);
+            padding: 30px;
+            border-radius: 5px;
+            margin-top: 30px;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+        }
+        
+        #face {
+            font-size: 100px;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+        }
+        
+        .belt-progress {
+            width: 100%;
+            height: 30px;
+            background-color: var(--primary-color);
+            border-radius: 15px;
+            margin: 30px 0;
+            overflow: hidden;
+            border: 1px solid var(--accent-color);
+        }
+        
+        .belt-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fff, #d4af37);
+            width: 0%;
+            transition: width 1s;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .belt-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        
+        .belt-label {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+        }
+        
+        #resultText {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+        
+        .bjj-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @media (max-width: 600px) {
+            .options {
+                flex-direction: column;
+            }
+            
+            .option {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="overlay">
+        <header>
+            <h1><i class="fas fa-user-ninja bjj-icon"></i>Test de Actitud BJJ</h1>
+            <p class="subtitle">Descubre cuán preparado estás para el arte suave</p>
+        </header>
+        
+        <form id="attitudeTest">
+            <!-- Las preguntas se generarán automáticamente con JavaScript -->
+        </form>
+        
+        <button type="button" onclick="calculateResults()">
+            <i class="fas fa-trophy bjj-icon"></i>Ver mis resultados
+        </button>
+        
+        <div id="result">
+            <h2>Tu Nivel de Actitud BJJ</h2>
+            <div class="belt-progress">
+                <div id="beltFill" class="belt-fill">0%</div>
+            </div>
+            <div class="belt-labels">
+                <span class="belt-label">Blanca</span>
+                <span class="belt-label">Azul</span>
+                <span class="belt-label">Morado</span>
+                <span class="belt-label">Marrón</span>
+                <span class="belt-label">Negra</span>
+            </div>
+            <div id="face">🥋</div>
+            <p id="resultText"></p>
+        </div>
+    </div>
+
+    <script>
+        // Preguntas del test específicas para BJJ
+        const questions = [
+            "1. ¿Disfrutas de la estrategia y el ajedrez humano que representa el BJJ?",
+            "2. ¿Puedes mantener la calma cuando estás en una posición desventajosa?",
+            "3. ¿Te consideras capaz de resistir la frustración durante el aprendizaje?",
+            "4. ¿Crees en el concepto 'suave' del Jiu Jitsu donde la técnica supera a la fuerza?",
+            "5. ¿Tienes la disciplina para entrenar regularmente, incluso cuando no tienes ganas?",
+            "6. ¿Eres capaz de analizar tus errores después de un roll para mejorar?",
+            "7. ¿Te sientes cómodo con la cercanía física y el contacto constante?",
+            "8. ¿Tienes paciencia para dominar técnicas que pueden tardar meses en perfeccionar?",
+            "9. ¿Respetas la jerarquía y las enseñanzas de los cinturones superiores?",
+            "10. ¿Puedes controlar tu ego cuando alguien menos experimentado te domina?",
+            "11. ¿Te gusta el aspecto de resolver problemas que presenta el BJJ?",
+            "12. ¿Estás dispuesto a soportar las molestias físicas (oreja de coliflor, dolores)?",
+            "13. ¿Mantienes la humildad cuando logras dominar una técnica difícil?",
+            "14. ¿Te ves capaz de adaptar tu juego a diferentes tipos de oponentes?",
+            "15. ¿Valoras más la técnica perfeccionada que la fuerza bruta?",
+            "16. ¿Tienes la perseverancia para seguir intentando una sumisión que nunca te sale?",
+            "17. ¿Puedes mantener la concentración durante varios minutos de rolling intenso?",
+            "18. ¿Estás abierto a aprender de todos, incluso de cinturones inferiores?",
+            "19. ¿Entiendes que el BJJ es un maratón, no un sprint, y lleva años dominarlo?",
+            "20. ¿Estás dispuesto a 'quedarte sin aire' y superar tus límites físicos?"
+        ];
+
+        const form = document.getElementById('attitudeTest');
+
+        // Generar las preguntas en el formulario
+        questions.forEach((question, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerHTML = `<i class="fas fa-grip-lines bjj-icon"></i> ${question}`;
+            questionDiv.appendChild(questionText);
+            
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            
+            // Crear 5 opciones de respuesta
+            const optionTexts = ['Nada', 'Poco', 'Regular', 'Bastante', 'Totalmente'];
+            
+            for (let i = 1; i <= 5; i++) {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `question${index}`;
+                input.value = i;
+                input.id = `question${index}_option${i}`;
+                input.required = true;
+                
+                const label = document.createElement('label');
+                label.htmlFor = `question${index}_option${i}`;
+                label.textContent = optionTexts[i-1];
+                
+                optionDiv.appendChild(input);
+                optionDiv.appendChild(label);
+                optionsDiv.appendChild(optionDiv);
+            }
+            
+            questionDiv.appendChild(optionsDiv);
+            form.appendChild(questionDiv);
+        });
+
+        function calculateResults() {
+            // Verificar que todas las preguntas estén respondidas
+            const answeredQuestions = Array.from(document.querySelectorAll('input[type="radio"]:checked')).length;
+            
+            if (answeredQuestions < questions.length) {
+                alert('Por favor responde todas las preguntas antes de ver los resultados.');
+                return;
+            }
+            
+            let totalScore = 0;
+            const maxScore = questions.length * 5;
+            
+            // Calcular puntaje total
+            questions.forEach((_, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                totalScore += parseInt(selectedOption.value);
+            });
+            
+            // Calcular porcentaje
+            const percentage = Math.round((totalScore / maxScore) * 100);
+            
+            // Mostrar resultados
+            document.getElementById('beltFill').style.width = `${percentage}%`;
+            document.getElementById('beltFill').textContent = `${percentage}%`;
+            
+            // Mostrar cara, texto y color según el resultado
+            const faceElement = document.getElementById('face');
+            const resultTextElement = document.getElementById('resultText');
+            
+            if (percentage >= 85) {
+                faceElement.textContent = '🥋🔥';
+                resultTextElement.innerHTML = '<i class="fas fa-crown bjj-icon"></i> ¡Tienes mentalidad de cinturón negro! Tu actitud es ejemplar para el BJJ. Dominas los conceptos de humildad, perseverancia y técnica sobre fuerza. El arte suave es para ti.';
+                document.getElementById('beltFill').style.background = 'linear-gradient(90deg, #fff, #000)';
+            } else if (percentage >= 70) {
+                faceElement.textContent = '💪🥋';
+                resultTextElement.innerHTML = '<i class="fas fa-medal bjj-icon"></i> ¡Mentalidad de cinturón marrón! Tienes una excelente base para el BJJ. Entiendes los principios fundamentales y estás en camino a dominarlos completamente.';
+                document.getElementById('beltFill').style.background = 'linear-gradient(90deg, #fff, #964B00)';
+            } else if (percentage >= 55) {
+                faceElement.textContent = '🤔🥋';
+                resultTextElement.innerHTML = '<i class="fas fa-award bjj-icon"></i> Actitud de cinturón morado. Vas por buen camino pero aún hay aspectos por pulir. Tu comprensión del juego está evolucionando. Sigue entrenando!';
+                document.getElementById('beltFill').style.background = 'linear-gradient(90deg, #fff, #800080)';
+            } else if (percentage >= 40) {
+                faceElement.textContent = '🤼‍♂️';
+                resultTextElement.innerHTML = '<i class="fas fa-thumbs-up bjj-icon"></i> Mentalidad de cinturón azul. Has superado lo básico pero el verdadero viaje recién comienza. Trabaja en controlar tu ego y profundiza en la técnica.';
+                document.getElementById('beltFill').style.background = 'linear-gradient(90deg, #fff, #0000ff)';
+            } else {
+                faceElement.textContent = '🧘‍♂️';
+                resultTextElement.innerHTML = '<i class="fas fa-seedling bjj-icon"></i> Actitud de cinturón blanco. Todos empezamos aquí. El BJJ puede ser abrumador al principio, pero con paciencia y perseverancia irás progresando. ¡Mantén la mente abierta!';
+                document.getElementById('beltFill').style.background = 'linear-gradient(90deg, #fff, #d4af37)';
+            }
+            
+            document.getElementById('result').style.display = 'block';
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+</html>
